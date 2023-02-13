@@ -5,18 +5,30 @@ inerted
 
 google sing-in
 */
-import './button.styles.scss'
+import { BaseButton, GoogleSignInButton, InvertedSignInButton } from './button.styles.jsx';
 
-const BUTTON_TYPES_CLASSES = {
-    google: 'google-sign-in',
+export const BUTTON_TYPES_CLASSES = {
+    base: 'base',
+    google: 'google',
     inverted: 'inverted',
-}
+};
+
+const getButton = (buttonType = BUTTON_TYPES_CLASSES.base) => (
+    {
+        [BUTTON_TYPES_CLASSES.base]: BaseButton,
+        [BUTTON_TYPES_CLASSES.google]: GoogleSignInButton,
+        [BUTTON_TYPES_CLASSES.inverted]: InvertedSignInButton
+    }[buttonType]
+)
 
 const Button = ({children, buttonType, ...otherProps}) => {
+
+    const CustomButton = getButton(buttonType);
+
     return (
-        <button className={`button-container ${BUTTON_TYPES_CLASSES[buttonType]}`} {...otherProps}>
+        <CustomButton {...otherProps}>
             {children}
-        </button>
+        </CustomButton>
     );
 }
 
